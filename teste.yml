@@ -13,10 +13,10 @@
     - name: Baixar instalador do Firefox
       ansible.windows.win_get_url:
         url: "https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=pt-BR"
-        dest: "C:\Temp\FirefoxInstaller.exe"
+        dest: "C:\\Temp\\FirefoxInstaller.exe"
 
     - name: Instalar Firefox silenciosamente
       ansible.windows.win_package:
-        path: "C:\Temp\FirefoxInstaller.exe"
+        path: "C:\\Temp\\FirefoxInstaller.exe"
         state: present
         arguments: "-ms"
