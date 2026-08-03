@@ -1,13 +1,17 @@
 ---
-- name: Coletar informações dos PCs
-  hosts: all
+- name: Coletar informações dos computadores
+  hosts: windows
   gather_facts: yes
 
   tasks:
 
-    - name: Mostrar nome do computador
+    - name: Mostrar informações dos PCs
       debug:
         msg:
-          - "Hostname: {{ ansible_hostname }}"
-          - "Sistema: {{ ansible_distribution }}"
-          - "IP: {{ ansible_default_ipv4.address }}"
+          - "Nome do computador: {{ ansible_hostname }}"
+          - "Sistema operacional: {{ ansible_distribution }}"
+          - "Versão do Windows: {{ ansible_distribution_version }}"
+          - "Usuário conectado: {{ ansible_user }}"
+          - "Arquitetura: {{ ansible_architecture }}"
+          - "IP: {{ ansible_ip_addresses }}"
+          - "Memória RAM: {{ ansible_memtotal_mb }} MB"
