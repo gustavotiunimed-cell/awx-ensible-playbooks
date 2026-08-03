@@ -6,7 +6,7 @@
   tasks:
 
     - name: Instalar impressora compartilhada
-      ansible.windows.win_command: >
-        rundll32 printui.dll,PrintUIEntry
-        /in
-        /n "\\192.168.15.131\Central Piso 2"
+      ansible.windows.win_shell: |
+        Start-Process rundll32.exe -ArgumentList 'printui.dll,PrintUIEntry /in /n "\\192.168.15.131\Central Piso 2"' -Wait
+      async: 60
+      poll: 5
