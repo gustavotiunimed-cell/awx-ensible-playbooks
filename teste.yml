@@ -1,5 +1,5 @@
 - name: Teste múltiplos PCs
-  hosts: all
+  hosts: windows
   tasks:
     - name: Ver hostname
       win_shell: hostname
