@@ -1,10 +1,9 @@
-- name: Coletar informações do Windows
+- name: Coletar e salvar info
   hosts: meu_pc
   tasks:
-    - name: Rodar systeminfo
-      win_shell: systeminfo
+    - win_shell: systeminfo
       register: resultado
 
-    - name: Mostrar resultado
-      debug:
-        var: resultado.stdout
+    - win_copy:
+        content: "{{ resultado.stdout }}"
+        dest: C:\temp\info.txt
