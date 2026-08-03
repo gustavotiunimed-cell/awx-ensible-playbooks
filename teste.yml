@@ -1,9 +1,9 @@
-- name: Coletar e salvar info
-  hosts: meu_pc
+- name: Teste múltiplos PCs
+  hosts: all
   tasks:
-    - win_shell: systeminfo
+    - name: Ver hostname
+      win_shell: hostname
       register: resultado
 
-    - win_copy:
-        content: "{{ resultado.stdout }}"
-        dest: C:\temp\info.txt
+    - debug:
+        var: resultado.stdout
