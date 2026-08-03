@@ -9,10 +9,9 @@
         $senhaSegura = ConvertTo-SecureString "{{ printer_password }}" -AsPlainText -Force
         $cred = New-Object System.Management.Automation.PSCredential($usuario, $senhaSegura)
 
-        New-PSDrive -Name "TempPrinterDrive" -PSProvider FileSystem `
-            -Root "\\192.168.15.131" -Credential $cred -ErrorAction Stop
+        New-PSDrive -Name "TempPrinterDrive" -PSProvider FileSystem -Root "\\192.168.15.131" -Credential $cred -ErrorAction Stop
 
-        Get-ChildItem "TempPrinterDrive:\"
+        Get-ChildItem TempPrinterDrive:\
 
         Remove-PSDrive -Name "TempPrinterDrive"
       register: resultado
