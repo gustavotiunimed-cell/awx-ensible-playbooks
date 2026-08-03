@@ -1,7 +1,7 @@
-- name: Meu primeiro playbook AWX
-  hosts: all
+- name: Criar arquivo no Windows
+  hosts: meu_pc
   tasks:
-    - name: Criar arquivo de teste
-      file:
-        path: /tmp/teste_awx.txt
+    - name: Criar arquivo
+      win_file:
+        path: C:\temp\teste_awx.txt
         state: touch
