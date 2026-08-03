@@ -1,6 +1,6 @@
 ---
 - name: Inventário dos computadores
-  hosts: windows
+  hosts: all
   gather_facts: yes
 
   tasks:
@@ -12,9 +12,19 @@
           sistema: "{{ ansible_distribution }}"
           versao_windows: "{{ ansible_distribution_version }}"
           usuario: "{{ ansible_user }}"
-          memoria: "{{ ansible_memtotal_mb }}"
-          ip: "{{ ansible_all_ipv4_addresses[0] }}"
+          memoria: "{{ ansible_memtotal_mb }} MB"
+
+    - name: Pegar IP do computador
+      ansible.windows.win_shell: |
+        (Get-NetIPAddress -AddressFamily IPv4 | Where-Object {$_.IPAddress -notlike "169.*" -and $_.IPAddress -ne "127.0.0.1"}).IPAddress
+      register: ip_pc
 
     - name: Mostrar inventário
       debug:
-        var: inventario
+        msg:
+          - "Computador: {{ inventario.computador }}"
+          - "Sistema: {{ inventario.sistema }}"
+          - "Versão: {{ inventario.versao_windows }}"
+          - "Usuário: {{ inventario.usuario }}"
+          - "Memória: {{ inventario.memoria }}"
+          - "IP: {{ ip_pc.stdout_lines }}"
