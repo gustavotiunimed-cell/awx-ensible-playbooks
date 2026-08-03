@@ -1,6 +1,6 @@
 ---
 - name: Inventário dos computadores
-  hosts: all
+  hosts: windows
   gather_facts: yes
 
   tasks:
