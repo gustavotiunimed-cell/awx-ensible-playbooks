@@ -1,17 +1,20 @@
 ---
-- name: Coletar informações dos computadores
-  hosts: windows
+- name: Inventário dos computadores
+  hosts: all
   gather_facts: yes
 
   tasks:
 
-    - name: Mostrar informações dos PCs
+    - name: Coletar informações
+      set_fact:
+        inventario:
+          computador: "{{ ansible_hostname }}"
+          sistema: "{{ ansible_distribution }}"
+          versao_windows: "{{ ansible_distribution_version }}"
+          usuario: "{{ ansible_user }}"
+          memoria: "{{ ansible_memtotal_mb }}"
+          ip: "{{ ansible_all_ipv4_addresses[0] }}"
+
+    - name: Mostrar inventário
       debug:
-        msg:
-          - "Nome do computador: {{ ansible_hostname }}"
-          - "Sistema operacional: {{ ansible_distribution }}"
-          - "Versão do Windows: {{ ansible_distribution_version }}"
-          - "Usuário conectado: {{ ansible_user }}"
-          - "Arquitetura: {{ ansible_architecture }}"
-          - "IP: {{ ansible_ip_addresses }}"
-          - "Memória RAM: {{ ansible_memtotal_mb }} MB"
+        var: inventario
