@@ -1,7 +1,10 @@
-- name: Criar e escrever arquivo no Windows
+- name: Coletar informações do Windows
   hosts: meu_pc
   tasks:
-    - name: Criar arquivo com conteúdo
-      win_copy:
-        content: "Esse arquivo foi criado pelo AWX 🚀"
-        dest: C:\temp\teste_awx.txt
+    - name: Rodar systeminfo
+      win_shell: systeminfo
+      register: resultado
+
+    - name: Mostrar resultado
+      debug:
+        var: resultado.stdout
