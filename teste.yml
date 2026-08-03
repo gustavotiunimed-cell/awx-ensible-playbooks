@@ -1,9 +1,7 @@
-- name: Teste múltiplos PCs
-  hosts: windows
-  tasks:
-    - name: Ver hostname
-      win_shell: hostname
-      register: resultado
-
-    - debug:
-        var: resultado.stdout
+- name: Criar TXT com informações
+  ansible.windows.win_copy:
+    content: |
+      Computador: {{ ansible_hostname }}
+      Usuário: {{ ansible_user }}
+      Sistema: {{ ansible_distribution }}
+    dest: C:\Temp\info_pc.txt
