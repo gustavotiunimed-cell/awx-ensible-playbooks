@@ -1,22 +1,22 @@
 ---
-- name: Testar servidor de impressão
-  hosts: all
-  gather_facts: no
-  tasks:
-    - name: Listar compartilhamento com credenciais explícitas
-      ansible.windows.win_shell: |
-        $usuario = "{{ printer_user }}"
-        $senhaSegura = ConvertTo-SecureString "{{ printer_password }}" -AsPlainText -Force
-        $cred = New-Object System.Management.Automation.PSCredential($usuario, $senhaSegura)
+- name: Instalar Firefox nos computadores
+hosts: all
+gather_facts: no
 
-        New-PSDrive -Name "TempPrinterDrive" -PSProvider FileSystem -Root "\\192.168.15.131" -Credential $cred -ErrorAction Stop
+tasks:
 
-        Get-ChildItem TempPrinterDrive:\
+    - name: Criar pasta temporária
+     ansible.windows.win_file:
+        path: C:\Temp
+        state: directory
 
-        Remove-PSDrive -Name "TempPrinterDrive"
-      register: resultado
-      # no_log: true   <-- comentado só para conseguirmos ver o erro agora
+    - name: Baixar instalador do Firefox
+     ansible.windows.win_get_url:
+        url: "https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=pt-BR"
+        dest: "C:\\Temp\\FirefoxInstaller.exe"
 
-    - name: Mostrar resultado
-      debug:
-        var: resultado
+    - name: Instalar Firefox silenciosamente
+     ansible.windows.win_package:
+        path: "C:\\Temp\\FirefoxInstaller.exe"
+        state: present
+        arguments: "-ms"
