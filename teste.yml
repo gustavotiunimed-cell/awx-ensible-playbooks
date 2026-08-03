@@ -2,13 +2,21 @@
 - name: Testar servidor de impressão
   hosts: all
   gather_facts: no
-
   tasks:
-
-    - name: Listar compartilhamento de impressoras
+    - name: Listar compartilhamento com credenciais explícitas
       ansible.windows.win_shell: |
-        Get-ChildItem "\\192.168.15.131"
+        $usuario = "{{ printer_user }}"
+        $senhaSegura = ConvertTo-SecureString "{{ printer_password }}" -AsPlainText -Force
+        $cred = New-Object System.Management.Automation.PSCredential($usuario, $senhaSegura)
+
+        New-PSDrive -Name "TempPrinterDrive" -PSProvider FileSystem `
+            -Root "\\192.168.15.131" -Credential $cred -ErrorAction Stop
+
+        Get-ChildItem "TempPrinterDrive:\"
+
+        Remove-PSDrive -Name "TempPrinterDrive"
       register: resultado
+      no_log: true
 
     - name: Mostrar resultado
       debug:
