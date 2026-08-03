@@ -3,5 +3,5 @@
   tasks:
     - name: Criar arquivo
       win_file:
-        path: C:\temp\teste_awx.txt
+        path: C:/temp/teste_awx.txt
         state: touch
