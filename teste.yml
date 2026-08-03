@@ -5,6 +5,8 @@
 
   tasks:
 
-    - name: Adicionar impressora compartilhada
-      ansible.windows.win_shell: |
-        Add-Printer -ConnectionName "\\192.168.15.131\Central Piso 2"
+    - name: Instalar impressora compartilhada
+      ansible.windows.win_command: >
+        rundll32 printui.dll,PrintUIEntry
+        /in
+        /n "\\192.168.15.131\Central Piso 2"
