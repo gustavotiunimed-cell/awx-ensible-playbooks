@@ -7,6 +7,13 @@
 
     - name: Adicionar impressora
       ansible.windows.win_shell: |
-        rundll32 printui.dll,PrintUIEntry /in /n "\\192.168.15.131\Central Piso 2" 
-      async: 30
-      poll: 0
+        Start-Process rundll32.exe -ArgumentList 'printui.dll,PrintUIEntry /in /n "\\192.168.15.131\Central Piso 2"'
+
+    - name: Verificar impressoras instaladas
+      ansible.windows.win_shell: |
+        Get-Printer | Select-Object Name
+      register: impressoras
+
+    - name: Mostrar impressoras
+      debug:
+        var: impressoras.stdout_lines
