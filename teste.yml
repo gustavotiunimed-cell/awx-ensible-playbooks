@@ -1,7 +1,13 @@
-- name: Criar TXT com informações
-  ansible.windows.win_copy:
-    content: |
-      Computador: {{ ansible_hostname }}
-      Usuário: {{ ansible_user }}
-      Sistema: {{ ansible_distribution }}
-    dest: C:\Temp\info_pc.txt
+---
+- name: Coletar informações dos PCs
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+
+    - name: Mostrar nome do computador
+      debug:
+        msg:
+          - "Hostname: {{ ansible_hostname }}"
+          - "Sistema: {{ ansible_distribution }}"
+          - "IP: {{ ansible_default_ipv4.address }}"
