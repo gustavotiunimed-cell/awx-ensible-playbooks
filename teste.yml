@@ -15,8 +15,8 @@
 
         Remove-PSDrive -Name "TempPrinterDrive"
       register: resultado
-      no_log: true
+      # no_log: true   <-- comentado só para conseguirmos ver o erro agora
 
     - name: Mostrar resultado
       debug:
-        var: resultado.stdout_lines
+        var: resultado
