@@ -5,15 +5,19 @@
 
   tasks:
 
-    - name: Adicionar impressora
-      ansible.windows.win_shell: |
-        Start-Process rundll32.exe -ArgumentList 'printui.dll,PrintUIEntry /in /n "\\192.168.15.131\Central Piso 2"'
+    - name: Instalar impressora compartilhada
+      ansible.windows.win_command: >
+        rundll32 printui.dll,PrintUIEntry
+        /in
+        /n "\\192.168.15.131\Central Piso 2"
+      async: 120
+      poll: 10
 
-    - name: Verificar impressoras instaladas
+    - name: Verificar se instalou
       ansible.windows.win_shell: |
-        Get-Printer | Select-Object Name
-      register: impressoras
+        Get-Printer | Where-Object {$_.Name -like "*Central Piso 2*"}
+      register: impressora
 
-    - name: Mostrar impressoras
+    - name: Mostrar resultado
       debug:
-        var: impressoras.stdout_lines
+        var: impressora.stdout_lines
