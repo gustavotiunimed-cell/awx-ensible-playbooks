@@ -1,7 +1,7 @@
-- name: Criar arquivo no Windows
+- name: Criar e escrever arquivo no Windows
   hosts: meu_pc
   tasks:
-    - name: Criar arquivo
-      win_file:
-        path: C:/temp/teste_awx.txt
-        state: touch
+    - name: Criar arquivo com conteúdo
+      win_copy:
+        content: "Esse arquivo foi criado pelo AWX 🚀"
+        dest: C:\temp\teste_awx.txt
