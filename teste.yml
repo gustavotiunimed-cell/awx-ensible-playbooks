@@ -1,22 +1,9 @@
----
-- name: Instalar Firefox nos computadores
-hosts: all
-gather_facts: no
+- hosts: all
+  gather_facts: no
 
-tasks:
+  tasks:
 
-    - name: Criar pasta temporária
-     ansible.windows.win_file:
-        path: C:\Temp
-        state: directory
-
-    - name: Baixar instalador do Firefox
-     ansible.windows.win_get_url:
-        url: "https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=pt-BR"
-        dest: "C:\\Temp\\FirefoxInstaller.exe"
-
-    - name: Instalar Firefox silenciosamente
-     ansible.windows.win_package:
-        path: "C:\\Temp\\FirefoxInstaller.exe"
+    - name: Instalar Tasy Native
+      win_package:
+        path: C:\TEMP\TasyNative-5.14.7-win-x64.msi
         state: present
-        arguments: "-ms"
