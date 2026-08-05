@@ -1,8 +1,12 @@
 - hosts: all
   gather_facts: no
 
+  become: yes
+  become_method: runas
+  become_user: gustavo.ramos
+
   tasks:
 
-    - name: Instalar Tasy forçando
+    - name: Instalar Tasy como usuário
       win_shell: |
-        msiexec /i C:\TEMP\TasyNative-5.14.7-win-x64.msi /passive /norestart /l*v C:\TEMP\install.log
+        msiexec /i C:\TEMP\TasyNative-5.14.7-win-x64.msi /passive /norestart
