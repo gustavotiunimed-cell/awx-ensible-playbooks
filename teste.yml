@@ -4,18 +4,8 @@
 
   tasks:
 
-    - name: Criar pasta TEMP
-      ansible.windows.win_file:
-        path: C:\Temp
-        state: directory
-
-    - name: Copiar MSI (se já estiver no projeto)
-      ansible.windows.win_copy:
-        src: files/TasyNative-5.14.7-win-x64.msi
-        dest: C:\Temp\TasyNative-5.14.7-win-x64.msi
-
-    - name: Instalar Tasy
+    - name: Instalar Tasy direto
       ansible.windows.win_package:
-        path: C:\Temp\TasyNative-5.14.7-win-x64.msi
+        path: C:\TEMP\TasyNative-5.14.7-win-x64.msi
         state: present
         arguments: "/passive /norestart"
