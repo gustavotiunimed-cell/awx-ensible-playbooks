@@ -1,12 +1,21 @@
-- hosts: all
+- name: Instalar Tasy
+  hosts: all
   gather_facts: no
-
-  become: yes
-  become_method: runas
-  become_user: gustavo.ramos
 
   tasks:
 
-    - name: Instalar Tasy como usuário
-      win_shell: |
-        msiexec /i C:\TEMP\TasyNative-5.14.7-win-x64.msi /passive /norestart
+    - name: Criar pasta TEMP
+      ansible.windows.win_file:
+        path: C:\Temp
+        state: directory
+
+    - name: Copiar MSI (se já estiver no projeto)
+      ansible.windows.win_copy:
+        src: files/TasyNative-5.14.7-win-x64.msi
+        dest: C:\Temp\TasyNative-5.14.7-win-x64.msi
+
+    - name: Instalar Tasy
+      ansible.windows.win_package:
+        path: C:\Temp\TasyNative-5.14.7-win-x64.msi
+        state: present
+        arguments: "/passive /norestart"
