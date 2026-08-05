@@ -3,6 +3,6 @@
 
   tasks:
 
-    - name: Instalar Tasy (via msiexec)
+    - name: Instalar Tasy forçando
       win_shell: |
-        msiexec /i C:\TEMP\TasyNative-5.14.7-win-x64.msi /quiet /norestart /l*v C:\TEMP\install.log
+        msiexec /i C:\TEMP\TasyNative-5.14.7-win-x64.msi /passive /norestart /l*v C:\TEMP\install.log
