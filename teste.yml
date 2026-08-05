@@ -3,7 +3,10 @@
 
   tasks:
 
-    - name: Instalar Tasy Native
+    - name: Verificar arquivo
+      win_shell: dir C:\TEMP
+
+    - name: Instalar Tasy
       win_package:
         path: C:\TEMP\TasyNative-5.14.7-win-x64.msi
         state: present
